@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title%} Sell Stocks {% endblock %}
+
+{% block main%}
+
+<form action="/sell" method="post">
+    <select class="form-select" name="symbol">
+        <option selected>Choose a stock</option>
+        {% for symbol in symbols %}
+            <option value={{ symbol['symbol'] }}{% if symbol["symbol"] == requested_symbol %} selected {% endif %}>{{ symbol["symbol"] }}</option>
+        {% endfor %}
+      </select>
+    <input class="form-control" type="number" name="shares" placeholder="Shares" autocomplete="off">
+    <button class="btn btn-primary" type="submit">Sell</button>
+</form>
+
+{% endblock %}

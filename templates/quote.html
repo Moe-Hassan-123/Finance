@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %} quote {% endblock %}
+
+{% block main %}
+
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <input name="symbol" placeholder="ex: NFLX" autocomplete="off" autofocus>
+            <button class="btn btn-primary" type="submit">Add to WatchList</button>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <th scope="col">Company's name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Current Price</th>
+            <th scope="col"> Delete</th>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock["name"] }}</td>
+                    <td>{{ stock["symbol"] }}</td>
+                    <td id="{{ stock['symbol'] }}" class="price" >{{ stock["price"] }}</td>
+                    <td>
+                        <form action="/delete" method="post">
+                            <input name="symbol" value="{{ stock['symbol'] }}" hidden>
+                            <button class="btn btn-primary" type="submit">Remove From WatchList</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

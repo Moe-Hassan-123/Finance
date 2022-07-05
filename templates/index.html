@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title%} Portfolio {% endblock %}
+
+{% block alert %}
+    {% if alert != "None" %}
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ alert }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block main %}
+<table class="table table-striped table-hover">
+    <thead>
+        <th scope="col">Company's name</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Shares Owned</th>
+        <th scope="col">Current Price</th>
+        <th scope="col">Total</th>
+        <th scope="col">Delete</th>
+    </thead>
+    <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock["name"] }}</td>
+                <td>{{ stock["symbol"] }}</td>
+                <td>{{ stock["shares"] }}</td>
+                <td>{{ stock["price"] }}</td>
+                <td>{{ stock["total"] }}</td>
+                <td>
+                    <form action="/sell" method="GET">
+                        <input name="symbol" value="{{ stock['symbol'] }}" hidden>
+                        <button class="btn btn-primary" type="submit">Sell</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">Cash</td>
+            <td class="border-0 text-end">{{ cash }}</td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">TOTAL</td>
+            <td class="border-0 w-bold text-end">{{ total }}</td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}
